@@ -21,10 +21,10 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 load_dotenv()
 
 loader = DirectoryLoader(
-    path="./Papers",
-    glob="**/*.pdf",
+    path="./Papers/school",
+    glob="**/*.txt",
     loader_cls=UnstructuredLoader,
-    loader_kwargs={"languages": ["eng"]},
+    loader_kwargs={"languages": ["nld"]},
     show_progress=True,
     use_multithreading=True,
 )
@@ -50,23 +50,23 @@ docs = loader.load()
 #     for source, parts in parts_per_source.items()
 # ]
 
-# textSplitter = RecursiveCharacterTextSplitter.from_language(
-#     Language.MARKDOWN,
-#     chunk_size=1200,
-#     chunk_overlap=200,
-#     add_start_index=True,
-#     strip_whitespace=True,
-# )
+textSplitter = RecursiveCharacterTextSplitter.from_language(
+    Language.MARKDOWN,
+    chunk_size=1200,
+    chunk_overlap=200,
+    add_start_index=True,
+    strip_whitespace=True,
+)
 embeddings= OpenAIEmbeddings(
     model="text-embedding-3-large"
 )
 
-# breakpoint_threshold_amount means the threshold for determining where to split the text based on semantic similarity. 
+# breakpoint_threshold_amount means the threshold for determining where to split the text based on semantic similarity.
 # if the similarity between two chunks is below this threshold, a split will occur.
-textSplitter = SemanticChunker(
-    embeddings= embeddings,
-    breakpoint_threshold_amount=0.85 
-)
+# textSplitter = SemanticChunker(
+#     embeddings= embeddings,
+#     breakpoint_threshold_amount=85
+# )
 
 # chunk the documents into smaller pieces using the text splitter
 splits = textSplitter.split_documents(docs)
