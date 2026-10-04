@@ -31,25 +31,6 @@ loader = DirectoryLoader(
 
 docs = loader.load()
 
-
-# UnstructuredLoader geeft één Document per element (titel, alinea, footer, ...).
-# Voeg ze per PDF samen tot één Markdown-tekst, zodat de splitter iets te splitsen heeft
-# en de MARKDOWN_SEPARATORS op koppen kunnen matchen.
-# parts_per_source = defaultdict(list)
-# for element in elements:
-#     category = element.metadata.get("category")
-#     if category in ("Footer", "Header", "PageNumber"):
-#         continue
-#     text = element.page_content
-#     if category == "Title":
-#         text = f"# {text}"
-#     parts_per_source[element.metadata["source"]].append(text)
-
-# docs = [
-#     Document(page_content="\n\n".join(parts), metadata={"source": source})
-#     for source, parts in parts_per_source.items()
-# ]
-
 textSplitter = RecursiveCharacterTextSplitter.from_language(
     Language.MARKDOWN,
     chunk_size=1200,
